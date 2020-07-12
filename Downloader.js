@@ -93,7 +93,11 @@ export default class Downloader {
 
     const contentLength = response.headers['content-length'] || response.headers['Content-Length'];
     this.fileSize = parseInt(contentLength);
-
+    const headers = {}
+        for (let header of response.headers) {
+            headers[header[0]] = header[1];
+        }
+    response.headers = headers;    
     this.response = response;
 
     return response.body;
@@ -176,7 +180,7 @@ export default class Downloader {
   getFileNameFromContentType(contentType) {
 
     let extension = mime.extension(contentType)
-
+    // console.log('extension',extension)
     const url = this.removeQueryString(this.config.url);
     const fileNameWithoutExtension = this.removeExtension(basename(url));
     return `${sanitize(fileNameWithoutExtension)}.${extension}`;
@@ -204,8 +208,8 @@ export default class Downloader {
    * @return {string} fileName
    */
   deduceFileName(url, headers) {
-    
-    
+    // console.log('headers',headers)
+    // debugger;
     //First option
     const fileNameFromContentDisposition = this.getFileNameFromContentDisposition(headers['content-disposition'] || headers['Content-Disposition']);
     if (fileNameFromContentDisposition) return fileNameFromContentDisposition;   
@@ -219,6 +223,7 @@ export default class Downloader {
 
     //Third option
     const fileNameFromContentType = this.getFileNameFromContentType(headers['content-type'] || headers['Content-Type'])
+    // console.log('fileNameFromContentType',fileNameFromContentType)
     if (fileNameFromContentType) return fileNameFromContentType
 
 

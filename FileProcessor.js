@@ -11,7 +11,7 @@ class FileProcessor {
         // debugger;
         this.originalFileName = config.fileName;
         this.fileExtension = extname(this.originalFileName);
-        console.log(this.fileExtension)
+        // console.log(this.fileExtension)
         this.fileNameWithoutExtension = config.fileName.split('.').slice(0, -1).join('.')
         this.basePath = config.path[config.path.length - 1] === '/' ? config.path : config.path + '/';
 
