@@ -7,9 +7,10 @@ import {basename,extname} from "https://deno.land/std/path/mod.ts";
 
 const mkdir = ensureDir
 
-const require = createRequire(import.meta.url);
+// const require = createRequire(import.meta.url);
 // const path = require("path");
-var mime = require('./mime-types.js')
+// var mime = require('./mime-types.js')
+import {extension} from './mime-types.js';
 
 
 
@@ -179,11 +180,11 @@ export default class Downloader {
 
   getFileNameFromContentType(contentType) {
 
-    let extension = mime.extension(contentType)
+    let ext = extension(contentType)
     // console.log('extension',extension)
     const url = this.removeQueryString(this.config.url);
     const fileNameWithoutExtension = this.removeExtension(basename(url));
-    return `${sanitize(fileNameWithoutExtension)}.${extension}`;
+    return `${sanitize(fileNameWithoutExtension)}.${ext}`;
   }
 
 

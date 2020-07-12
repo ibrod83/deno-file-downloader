@@ -8204,7 +8204,8 @@ var db = {
   }
 }
 
-var extname = require('path').extname
+// var extname = require('path').extname
+import {extname} from "https://deno.land/std/path/mod.ts";
 
 /**
  * Module variables.
@@ -8377,14 +8378,25 @@ function populateMaps (extensions, types) {
   })
 }
 
+populateMaps(extensions, types)
 
-exports.charset = charset
-exports.charsets = { lookup: charset }
-exports.contentType = contentType
-exports.extension = extension
-exports.extensions = extensions;
-exports.lookup = lookup
-exports.types = types;
+var charsets = {lookup: charset }
+export {
+  charset,
+  charsets ,
+  contentType ,
+  extension ,
+  extensions,
+  lookup,
+  types  
+}
+// exports.charset = charset
+// exports.charsets = { lookup: charset }
+// exports.contentType = contentType
+// exports.extension = extension
+// exports.extensions = extensions;
+// exports.lookup = lookup
+// exports.types = types;
 
 // Populate the extensions/types maps
-populateMaps(exports.extensions, exports.types)
+
