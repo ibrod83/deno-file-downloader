@@ -3,11 +3,12 @@ import sanitize from './sanitize-filename/index.js';
 import FileProcessor from './FileProcessor.js';
 import { createRequire } from "https://deno.land/std/node/module.ts";
 import { ensureDir } from "https://deno.land/std/fs/mod.ts";
+import {basename,extname} from "https://deno.land/std/path/mod.ts";
 
 const mkdir = ensureDir
 
 const require = createRequire(import.meta.url);
-const path = require("path");
+// const path = require("path");
 var mime = require('./mime-types.js')
 
 
@@ -177,7 +178,7 @@ export default class Downloader {
     let extension = mime.extension(contentType)
 
     const url = this.removeQueryString(this.config.url);
-    const fileNameWithoutExtension = this.removeExtension(path.basename(url));
+    const fileNameWithoutExtension = this.removeExtension(basename(url));
     return `${sanitize(fileNameWithoutExtension)}.${extension}`;
   }
 
@@ -190,7 +191,7 @@ export default class Downloader {
   deduceFileNameFromUrl(url) {
     debugger;
     const cleanUrl = this.removeQueryString(url);
-    const baseName = sanitize(path.basename(cleanUrl));
+    const baseName = sanitize(basename(cleanUrl));
     return baseName;
     
   }
@@ -211,7 +212,7 @@ export default class Downloader {
 
 
     //Second option
-    if (path.extname(url)) {//First check if the url even has an extension
+    if (extname(url)) {//First check if the url even has an extension
       const fileNameFromUrl = this.deduceFileNameFromUrl(url);
       if (fileNameFromUrl) return fileNameFromUrl;
     }
